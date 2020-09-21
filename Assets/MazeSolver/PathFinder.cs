@@ -26,8 +26,6 @@ public class PathFinder : MonoBehaviour
             Debug.Log("PathFinder :: Route with " + route.Count + "returned.");
 
             routes.Add(route);
-            
-            
         }
 
         Debug.Log("Routes returned: " + routes.Count);
@@ -68,15 +66,11 @@ public class PathFinder : MonoBehaviour
             }
             else
             {
-                /* if next node node delivered, this node has no more available directions, so pop it from route */
+                /* if next node node delivered node has no more available directions, pop it from route */
                 route.Pop();
-                continue;
             }
-
-            
         }
-
-
+        
         return route;
     }
 

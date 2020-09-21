@@ -8,7 +8,7 @@ using UnityEngine;
 [Serializable]
 public class MazeNode : MonoBehaviour
 {
-    /* a square field and a 90 angle of movement leave four archtypical directions as signifying candidates:*/
+    /* directions used to store open directions (slightly redundant with Direction) */
     [SerializeField] private Opening up;
     [SerializeField] private Opening down;
     [SerializeField] private Opening left;
@@ -26,19 +26,19 @@ public class MazeNode : MonoBehaviour
     /* starting nodes are ns that are on hW[0,0...hW.getLenght(1)] where Down is Opening.OPEN */
     [SerializeField] private bool startingPosition;
 
-    /* winning positions are ns on a border of the maze that have an opening to the outside.
+    /* winning positions are nodes on a border of the maze that have an opening to the outside.
      Conditions on which a node is a winning candidate:
      * * NOT a starting position node (my rule)
      * * IF a node is top or bottom node, extreme left or right node.
      Conditions on which a candidate winning node IS A winning node:
-     * * IF the direction in which the node is extreme is OPEN : much win = true = winningPosition. 
+     * * IF the direction in which the node is
+     * extreme is OPEN (so at left extreme, left open - win): much win = true = winningPosition. 
      */
     [SerializeField] private bool winningPosition;
 
     public void InitializeNode(Maze maze, int yCount, int xCount)
     {
-
-        Cost = 1;
+        Cost = 1; // cost is not used for anything in this iteration
         Position = new Vector2Int(xCount, yCount);
         
         Openings = new Stack<Direction>();
