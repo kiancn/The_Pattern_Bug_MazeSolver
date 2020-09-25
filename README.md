@@ -5,8 +5,13 @@ Scripts are in the MazeSolver folder.
 
 This version provides one solution per starting field of maze; future version will grant multiple solutions per starting field.
 
-I believe the pathing-algorithm I dreamed up is a down-right-up-left-leaning depth first type deal.
+I have no idea how to accurately characterize the type of pathfinding algorithm I cooked up, but it works much like a Djikstra solution, except there is no scoring, and so it is not a shortest distance pathfinder (which is potentially contradictory in terms)... but a path will be found if it is there.
 
+
+
+# Try it:
 If you copy the content of Assets into a Unity project Assets folder, you should be able to run the scene SampleScene out of the box (in the Unity Editor).
 
-Program is not terrible interactive at this point (as in not, except for the Find Routes button).
+SampleScene - first solution
+
+Djikstraesque - second solution, a proper Djikstra implementation
