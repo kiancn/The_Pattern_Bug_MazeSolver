@@ -4,74 +4,78 @@ using UnityEngine;
 
 namespace MazeSolver.Djikstraesque
 {
-    public class 
+    public class
         DjNode : MonoBehaviour, INode
     {
-       [SerializeField] private Dictionary<DjNode, float> neighborhood; // directly reachable, unblocked nodes
-       [SerializeField] private LinkedList<DjNode> route; // LinkedList represents the journey so far, from start to goal
-       [SerializeField] private int cost; // distance from starting node, because nodes are picked based on cost
-       [SerializeField] private DjNeighborhoodChecker neighborhoodChecker;
+        [SerializeField] private Dictionary<DjNode, float> neighborhood; // directly reachable, unblocked nodes
+        [SerializeField] private LinkedList<DjNode> route; // LinkedList represents the journey so far, from start to goal
+        [SerializeField] private int cost; // distance from starting node, because nodes are picked based on cost
+        [SerializeField] private DjNeighborhoodChecker neighborhoodChecker;
 
-       [SerializeField] private bool isWinningNode;
+        [SerializeField] private bool isWinningNode;
 
-       [SerializeField] private bool isStartingNode;
+        [SerializeField] private bool isStartingNode;
 
-       public int numberOfNeighbors;
+        public int numberOfNeighbors;
 
-       private void Awake()
-       {
-           if (neighborhoodChecker == null)
-           {
-               neighborhoodChecker = this.GetComponentInParent<DjNeighborhoodChecker>();
-           }
-           if(neighborhoodChecker==null){Debug.Log("Neighborhood checker not found on Node named " + gameObject.name );}
-           
-           route = new LinkedList<DjNode>();
-       }
+        private void Awake() { OnEnable(); }
 
-       // private void Start() { InitializeNode(); }
+        private void OnEnable()
+        {
+            if (neighborhoodChecker == null)
+            {
+                neighborhoodChecker = this.GetComponentInParent<DjNeighborhoodChecker>();
+            }
 
-       public void InitializeNode()
-       {
-           neighborhood = neighborhoodChecker.FindNeighbors(this);
-                      numberOfNeighbors = neighborhood.Count;
-       }
+            if (neighborhoodChecker == null) { Debug.Log("Neighborhood checker not found on Node named " + gameObject.name); }
 
-       public Dictionary<DjNode, float> Neighborhood
+         
+        }
+
+        // private void Start() { InitializeNode(); }
+
+        public void InitializeNode()
+        {
+            neighborhood = neighborhoodChecker.FindNeighbors(this);
+            numberOfNeighbors = neighborhood.Count;
+            route = new LinkedList<DjNode>();
+        }
+
+        public Dictionary<DjNode, float> Neighborhood
         {
             get => neighborhood;
             set => neighborhood = value;
         }
 
-       public LinkedList<DjNode> Route
+        public LinkedList<DjNode> Route
         {
             get => route;
             set => route = value;
         }
 
-       public int Cost
+        public int Cost
         {
             get => cost;
             set => cost = value;
         }
 
 
-       public bool IsWinningNode
+        public bool IsWinningNode
         {
             get => isWinningNode;
             set => isWinningNode = value;
         }
 
-       public bool IsStartingNode
+        public bool IsStartingNode
         {
             get => isStartingNode;
             set => isStartingNode = value;
         }
 
-       public DjNeighborhoodChecker NeighborhoodChecker
-       {
-           get => neighborhoodChecker;
-           set => neighborhoodChecker = value;
-       }
+        public DjNeighborhoodChecker NeighborhoodChecker
+        {
+            get => neighborhoodChecker;
+            set => neighborhoodChecker = value;
+        }
     }
 }

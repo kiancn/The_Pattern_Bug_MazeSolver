@@ -42,5 +42,18 @@ namespace MazeSolver.Djikstraesque
                }
            }
        }
+
+       public List<DjNode> Field
+       {
+           get => field;
+           set => field = value;
+       }
+
+       public bool InitializeOnlyChildNodes
+       {
+           get => initializeOnlyChildNodes;
+           set => initializeOnlyChildNodes = value;
+       }
     }
+    
 }

@@ -17,6 +17,8 @@ namespace MazeSolver.util
          GameObject nodeTemplate = Instantiate(nodePrefab, new Vector2(-100, -100), Quaternion.identity);
 
          GameObject newNode = Instantiate(nodeTemplate, spawnPositionTransform.position, Quaternion.identity, transformToParentTo);
+         
+         Destroy(nodeTemplate);
       }
    }
 }
