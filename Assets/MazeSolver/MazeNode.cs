@@ -23,7 +23,8 @@ public class MazeNode : MonoBehaviour
 
     [SerializeField] private int cost;
 
-    /* starting nodes are ns that are on hW[0,0...hW.getLenght(1)] where Down is Opening.OPEN */
+    /* starting nodes are ns that are on horiz. line 0 
+     where (the attribute) down is Opening.OPEN */
     [SerializeField] private bool startingPosition;
 
     /* winning positions are nodes on a border of the maze that have an opening to the outside.
@@ -62,10 +63,10 @@ public class MazeNode : MonoBehaviour
         
         if(Right == Opening.OPEN){Openings.Push(Direction.RIGHT);}
 
+        if(Left == Opening.OPEN){Openings.Push(Direction.LEFT);}
+
         if(Up == Opening.OPEN){Openings.Push(Direction.UP);}
 
-        if(Left == Opening.OPEN){Openings.Push(Direction.LEFT);}
-        
         if(Down == Opening.OPEN){Openings.Push(Direction.DOWN);}
 
     }
