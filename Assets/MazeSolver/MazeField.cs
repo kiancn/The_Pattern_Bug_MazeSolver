@@ -123,7 +123,7 @@ public class MazeField : MonoBehaviour
     {
         foreach (var n in nodeField)
         {
-            // works because Position is 
+            // works because Positions of nodes is uniform (conceptual, not actual) 
             n.InitializeNode(maze, n.Position.y, n.Position.x); 
         }
     }
