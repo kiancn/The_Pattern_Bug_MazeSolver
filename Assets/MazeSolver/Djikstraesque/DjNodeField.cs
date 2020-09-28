@@ -26,6 +26,14 @@ namespace MazeSolver.Djikstraesque
            }
        }
 
+       public void ReInitializeUnvisitedNeighbors()
+       {
+           foreach (var node in field)
+           {
+               node.ResetUnvisitedNeighbors();
+           }
+       }
+
 
        private void OnDrawGizmos()
        {

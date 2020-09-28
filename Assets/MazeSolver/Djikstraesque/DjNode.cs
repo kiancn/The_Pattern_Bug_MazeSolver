@@ -8,8 +8,10 @@ namespace MazeSolver.Djikstraesque
         DjNode : MonoBehaviour, INode
     {
         [SerializeField] private Dictionary<DjNode, float> neighborhood; // directly reachable, unblocked nodes
-        [SerializeField] private LinkedList<DjNode> route; // LinkedList represents the journey so far, from start to goal
+        [SerializeField] private Dictionary<DjNode, float> unvisitedNeighborhood; // directly reachable, unblocked nodes
+        [SerializeField] private LinkedList<DjNode> path; // LinkedList represents the journey so far, from start to goal
         [SerializeField] private int cost; // distance from starting node, because nodes are picked based on cost
+        private int _originalCost; // stored original cost value, for resetting
         [SerializeField] private DjNeighborhoodChecker neighborhoodChecker;
 
         [SerializeField] private bool isWinningNode;
@@ -22,14 +24,16 @@ namespace MazeSolver.Djikstraesque
 
         private void OnEnable()
         {
+            neighborhood = new Dictionary<DjNode, float>();
+
+
+
             if (neighborhoodChecker == null)
             {
                 neighborhoodChecker = this.GetComponentInParent<DjNeighborhoodChecker>();
             }
 
             if (neighborhoodChecker == null) { Debug.Log("Neighborhood checker not found on Node named " + gameObject.name); }
-
-         
         }
 
         // private void Start() { InitializeNode(); }
@@ -38,7 +42,17 @@ namespace MazeSolver.Djikstraesque
         {
             neighborhood = neighborhoodChecker.FindNeighbors(this);
             numberOfNeighbors = neighborhood.Count;
-            route = new LinkedList<DjNode>();
+            
+            // _originalCost = cost;
+
+            ResetUnvisitedNeighbors();
+
+            path = new LinkedList<DjNode>();
+        }
+
+        public void ResetUnvisitedNeighbors()
+        {
+            unvisitedNeighborhood = new Dictionary<DjNode, float>(neighborhood);
         }
 
         public Dictionary<DjNode, float> Neighborhood
@@ -47,10 +61,16 @@ namespace MazeSolver.Djikstraesque
             set => neighborhood = value;
         }
 
-        public LinkedList<DjNode> Route
+        public Dictionary<DjNode, float> UnvisitedNeighborhood
         {
-            get => route;
-            set => route = value;
+            get => unvisitedNeighborhood;
+            set => unvisitedNeighborhood = value;
+        }
+
+        public LinkedList<DjNode> Path
+        {
+            get => path;
+            set => path = value;
         }
 
         public int Cost

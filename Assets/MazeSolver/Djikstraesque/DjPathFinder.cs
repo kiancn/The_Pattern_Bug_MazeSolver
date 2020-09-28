@@ -2,12 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using MazeSolver.Djikstraesque;
 using UnityEngine;
 
 /// <summary>
 /// PathFinder for the DjNodes -
-/// writing has just begun.
+/// Complete version of this incomplete pathfinder.
+/// Next iteration is PathFinderStar
 /// </summary>
 public class DjPathFinder : MonoBehaviour
 {
@@ -52,14 +54,15 @@ public class DjPathFinder : MonoBehaviour
     /// Method returns the shortest distance path between supplied node and
     /// the closest winning node (weight of nodes calculated on basis of distance
     /// to winning node + distance between nodes).
+    /// NB. This algorithm is serverely hindered by dead-ends. Writing new and improved. 
     /// </summary>
     /// <param name="node"></param>
     /// <returns>Route or empty stack returned</returns>
     public Stack<DjNode> ShortestDistanceRoute(DjNode node)
     {
-        Stack<DjNode> route = new Stack<DjNode>(50);
+        Stack<DjNode> route = new Stack<DjNode>(200);
         
-        node.Route.AddFirst(node); // updating route internal to start node
+        node.Path.AddFirst(node); // updating route internal to start node
         
         route.Push(node); // start node is now first node on stack
 
@@ -68,6 +71,7 @@ public class DjPathFinder : MonoBehaviour
             /*finding cheapest node*/
             DjNode cheapestNode = route.Peek();
             float lowestPrice = Single.MaxValue;
+            
             foreach (var nNode in route.Peek().Neighborhood)
             {
                 if (nNode.Value < lowestPrice)
@@ -76,26 +80,24 @@ public class DjPathFinder : MonoBehaviour
                     lowestPrice = nNode.Value;
                 }
             }
+            
 
-            if (!route.Peek().Route.Contains(cheapestNode))
-            // if (cheapestNode != route.Peek() && !cheapestNode.IsStartingNode && !route.Peek().IsStartingNode)
+            if (!route.Peek().Path.Contains(cheapestNode))
             {
-                route.Peek().Route.AddLast(cheapestNode);
-                cheapestNode.Route = route.Peek().Route;
+                route.Peek().Path.AddLast(cheapestNode);
+                cheapestNode.Path = route.Peek().Path;
                 
                 route.Push(cheapestNode);
-                
-                
-                if (cheapestNode.IsWinningNode)
-                {
-                    return route;
-                }
+
+                if (cheapestNode.IsWinningNode) { return route; }
             }
             else // this will only happen if a starting node is isolated, i think
             {
+                // Debug.Log("Popping node: " + node.name + " from route.");
                 route.Pop();
             }
         }
+        Debug.Log("Returning incomplete route, number of member: " + route.Count);
         return route;
     }
 }
