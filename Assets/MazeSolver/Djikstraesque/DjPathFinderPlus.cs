@@ -60,7 +60,7 @@ namespace MazeSolver.Djikstraesque
         /// Method returns the shortest distance path between supplied node and
         /// the closest winning node (weight of nodes calculated on basis of distance
         /// to winning node + distance between nodes).
-        /// NB. This algorithm is serverely hindered by dead-ends. Writing new and improved. 
+        /// NB. This algorithm not hindered by dead-ends.
         /// </summary>
         /// <param name="startNode"></param>
         /// <returns>Route or empty stack returned</returns>
